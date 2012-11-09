@@ -1,0 +1,19 @@
+{
+  "name": "nko3-github-messenging",
+  "version": "0.0.0",
+  "description": "github-messenging",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nko3/github-messenging.git"
+  },
+  "dependencies": {
+  },
+  "engines": {
+    "node": "0.8.x"
+  },
+  "subdomain": "github-messenging.nko3"
+}
