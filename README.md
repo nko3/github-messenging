@@ -1,4 +1,7 @@
-# Hello github-messenging!
+# github-messenging
+
+Message a github user as chat if the user is logged into
+the site or as email.
 
 ## Deploy instructions
 
@@ -12,7 +15,7 @@ git clone git@github.com:nko3/github-messenging.git
 
 ~~~sh
 npm install -g jitsu
-jitsu login --username nko3-github-messenging --password ZHjnTNSJIwyjlDuJ
+jitsu login --username nko3-github-messenging --password xxx
 jitsu deploy
 ~~~
 
