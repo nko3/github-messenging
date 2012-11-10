@@ -1,25 +1,42 @@
 extends layout
 
 block content
-  div.navbar.pull-right
-    a(href='/logout') Logout
+  div#add-user
+    div.well
+      h4 Hello #{ user.displayName }
+        a(href='/logout', class='pull-right') Logout
+      div.row-fluid
+        div.span6.offset3
+          form.form-inline
+            input(type='text')
+            button(type='submit', class='btn btn-primary') Add user
+            span.help-block
+              | Add a github user so that you can message him/her.
+              | (Does nothing else like inviting/asking for permission)
 
-  p.lead
-    h4 Hello #{ user.displayName }
-    form.form-inline
-      div.
-  section
-    header Your previous messages
-
-    if user.friends
-      for friend in user.friends
-        div.row-fluid
-          div.span8
-            ul
-              for message in friend.messages
-                li message
-          div.span4
-            ul
-              li friend.displayName
-    else
-      p You have not added any friends
+  div.row-fluid
+    div.span8
+      h3 Your previous messages
+      if user.friends
+        for friend in user.friends
+              ul
+                for message in friend.messages
+                  li message
+      else
+        p You have not sent any messages!? Ah, well.  Here is something.
+        blockquote 
+          p "The time has come," the walrus said, "to talk of many things:
+          | Of shoes and ships - and sealing wax - of cabbages and kings” 
+          small Lewis Carroll, Alice in wonderland.
+              
+    div.span4
+      h3 Your github friends
+      if user.friends
+        ul
+          li friend.displayName
+      else
+        p You have not added any friends!?
+        blockquote
+          | The truth is, everyone is going to hurt you. You just
+          | got to find the ones worth suffering for.
+          small Bob Marley

@@ -20,3 +20,11 @@ body {
 #welcome a {
   margin-top: 2em;
 }
+
+#add-user form {
+  margin-top: 1.5em;
+  text-align: center;
+}
+#add-user form button {
+  margin-left: 10px;
+}

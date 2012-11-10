@@ -22,17 +22,17 @@ html(lang="en")
           a(class='brand', href='/') github-messaging
 
     div.container
-      include advertisement
       block content
 
       footer
         hr
         &copy; 2012 Pradip P Caulagi.  Licensed under 
         a(href='https://github.com/nko3/github-messenging/blob/master/LICENSE') MIT.
+        |  A 
+        a(href='http://nodeknockout.com/', target='_blank') nodeko
+        |  production.
         span.pull-right
-          | A 
-          a(href='http://nodeknockout.com/', target='_blank') nodeko
-          |  production.
+          include advertisement
         
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js')
     script(src='/javascript/husharu.js')
