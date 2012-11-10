@@ -41,10 +41,11 @@ app.get('/auth/github',
 );
 
 app.get('/auth/github/callback', 
-  login.passport.authenticate('github', { failureRedirect: '/unauthorized' }),
-  function(req, res) {
-    res.redirect('/messages');
-  }
+  login.passport.authenticate('github', {
+    successRedirect: '/messages',
+    failureRedirect: '/unauthorized',
+    failureFlash: true
+  })
 );
 
 app.get('/logout', function(req, res){
