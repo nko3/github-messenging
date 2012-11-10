@@ -1,8 +1,8 @@
 extends layout
 
 block content
-  div.row-fluid
-    Message a github user.
-    a(href='/login')
-      | <i class='icon-github'></i>
-      | Signin with github
+  div#welcome
+    h1 Message a github user
+    a(href='/login', class='btn btn-large btn-info')
+      <i class='icon-github'></i>
+      strong &nbsp; | &nbsp; Signin with github
