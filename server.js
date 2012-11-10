@@ -53,7 +53,6 @@ app.get('/logout', function(req, res){
 });
 
 app.get('/messages', login.ensureAuthenticated, function(req, res){
-  console.log(req.user);
   res.render('messages', { user: req.user });
 });
 
