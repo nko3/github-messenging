@@ -1,4 +1,25 @@
 extends layout
 
 block content
-  #{ user }
+  div.navbar.pull-right
+    a(href='/logout') Logout
+
+  p.lead
+    h4 Hello #{ user.displayName }
+    form.form-inline
+      div.
+  section
+    header Your previous messages
+
+    if user.friends
+      for friend in user.friends
+        div.row-fluid
+          div.span8
+            ul
+              for message in friend.messages
+                li message
+          div.span4
+            ul
+              li friend.displayName
+    else
+      p You have not added any friends
