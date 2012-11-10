@@ -56,6 +56,11 @@ app.get('/messages', login.ensureAuthenticated, function(req, res){
   res.render('messages', { user: req.user });
 });
 
+app.get('*', function(req, res){
+  res.status(404);
+  res.render('404');
+});
+
 // Be sure to change the github id and secret if you change the port
 app.listen(3000)
 console.info("Started on port 3000");
