@@ -5,6 +5,7 @@ var express = require('express')
 
 var CLIENT_ID = process.env['GITHUB_CLIENT_ID'] || '7431e9e62b002407bded'; // dev id
 var CLIENT_SECRET = process.env['GITHUB_CLIENT_SECRET'] || '26b631364ffc0d32fc03c999bb49bca1d07940d1'; // dev secret
+console.log(CLIENT_ID);
 
 passport.serializeUser(function(user, done) {
   done(null, user);
