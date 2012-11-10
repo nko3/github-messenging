@@ -1,15 +1,7 @@
 var express = require('express')
-    , stylus = require('stylus')
     , passport = require('passport')
     , util = require('util')
     , GitHubStrategy = require('passport-github').Strategy;
-
-function compile(str, path) {
-  return stylus(str)
-    .set('filename', path)
-    .set('warn', true)
-    .set('compress', true);
-}
 
 var app = module.exports = express();
 app.configure(function(){
@@ -23,11 +15,6 @@ app.configure(function(){
   app.use(passport.session());
   app.use(app.router);
 
-  app.use(stylus.middleware({
-      src: __dirname + '/views' // .styl files are located in `views/stylesheets`
-    , dest: __dirname + '/static' // .styl resources are compiled `/stylesheets/*.css`
-    , compile: compile
-  }));
   app.use(express.static(__dirname + '/static'));
 });
 
