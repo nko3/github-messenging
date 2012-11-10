@@ -1,14 +1,15 @@
 body {
   font-family: 'EB Garamond', serif;
   font-size: 16px;
+  margin-top: 60px;
 }
 
-#welcome {
+#welcome, #unauthorized {
   margin: 5em 0;
   text-align: center;
 }
 
-#welcome h1 {
+#welcome h1, #unauthorized h2 {
   font-family: 'Butterfly Kids', cursive;
 }
 
