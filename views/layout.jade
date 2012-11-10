@@ -1,0 +1,49 @@
+!!! 5
+html(lang="en")
+  head
+    meta(charset='utf-8')
+    meta(name="description", content="Messaging for github")
+    meta(name="author", content="Pradip P Caulagi")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel='shortcut icon', href='/favicon.ico')
+
+    title= title
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    style
+      body {padding-top: 60px; padding-bottom 40px; }
+
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Droid+Sans')
+    link(rel='stylesheet', href='/css/bootstrap-responsive.min.css')
+    link(rel='stylesheet', href='/css/font-awesome.css')
+    link(rel='stylesheet', href='/css/github-messaging.css')
+
+  body
+    div.navbar.navbar-fixed-top
+      div.navbar-inner
+        div.container
+          a(class="btn btn-navbar", data-toggle="collapse", data-target=".nav-collapse")
+            span.icon-bar
+          a(class='brand', href='/') github-messaging
+
+    div.container
+      block content
+
+      footer
+        hr
+        &copy; 2012 Pradip P Caulagi.  Licensed under 
+        a(href='https://github.com/nko3/github-messenging/blob/master/LICENSE') MIT.
+        span.pull-right
+          a(href='http://nodeknockout.com/', target='_blank') A node knockout production.
+        
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js')
+    script(src='/javascript/husharu.js')
+    script(type='text/javascript')
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1895899-10']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
