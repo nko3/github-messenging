@@ -9,7 +9,7 @@ $(document).ready(function() {
       success: function(data) { 
         console.log(data);
         var node = $('#friends ul') || $('#friends').append('ul');
-        node.add('li').html(data;
+        node.add('li').html(data);
       }
     })
   })
