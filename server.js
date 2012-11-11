@@ -62,6 +62,10 @@ app.get('/messages', login.ensureAuthenticated, function(req, res){
   var user = req.user
     ;
     
+  if (user.profile === undefined || user.profile.github_id === undefined) {
+    res.redirect('/logout');
+  }
+
   async.parallel({
     following: function(cb) {
       db.getFollowing(user.profile.github_id, cb);
