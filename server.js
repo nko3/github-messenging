@@ -78,18 +78,6 @@ app.get('/messages', login.ensureAuthenticated, function(req, res){
   });
 });
 
-app.get('/friend/add', login.ensureAuthenticated, function(req, res){
-  var friendName =  req.query['friend_name'];
-  request('https://api.github.com/users/'+friendName+'/following', function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      // Store usr
-      res.send(JSON.stringify({ 'status': 'ok', 'profile': JSON.stringify(body) }));
-    } else {
-      res.send(JSON.stringify({ 'status': 'error' }));
-    }
-  })
-});
-
 app.get('*', function(req, res){
   res.status(404);
   res.render('404');
