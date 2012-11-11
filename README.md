@@ -13,5 +13,9 @@ what it is worth, this was the [effort][1]
 
 If you feel very inclined, do vote for the effort.  Thanks.
 
+### Setup
+
+        $ npm install
+        $ node server.js
 
 [1]: http://github-messenging.nko3.jitsu.com
