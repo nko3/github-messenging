@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+  /*
   $("#add-user form button[type='submit']").on('click', function(e) {
     e.preventDefault();
     $.ajax({
@@ -13,4 +13,5 @@ $(document).ready(function() {
       }
     })
   })
+  */
 });

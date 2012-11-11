@@ -1,6 +1,9 @@
 var express = require('express')
     , login = require('./login.js')
-    , request = require('request');
+    , request = require('request')
+    , db = require('./db.js')
+    , async = require('async')
+    ;
 
 var app = module.exports = express();
 app.configure(function(){
@@ -56,12 +59,24 @@ app.get('/logout', function(req, res){
 });
 
 app.get('/messages', login.ensureAuthenticated, function(req, res){
-  res.render('messages', { user: req.user });
+  var user = req.user
+    ;
+    
+  async.parallel({
+    following: function(cb) {
+      db.getFollowing(user.profile.github_id, cb);
+    }
+  }, function(error, results) {
+    user.following = results.following.following;
+    console.log(user.following);
+    res.render('messages', { user: req.user });
+  });
 });
 
 app.get('/friend/add', login.ensureAuthenticated, function(req, res){
   var friendName =  req.query['friend_name'];
-  request('https://api.github.com/users/'+friendName, function (error, response, body) {
+  request('https://api.github.com/users/'+friendName+'/following', function (error, response, body) {
+    console.log(body);
     if (!error && response.statusCode == 200) {
       // Store usr
       res.send(JSON.stringify({ 'status': 'ok', 'profile': JSON.stringify(body) }));

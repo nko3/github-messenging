@@ -1,11 +1,14 @@
 var express = require('express')
   , passport = require('passport')
   , util = require('util')
-  , GitHubStrategy = require('passport-github').Strategy;
+  , GitHubStrategy = require('passport-github').Strategy
+  , db = require('./db.js')
+  ;
 
 var CLIENT_ID = process.env['GITHUB_CLIENT_ID'] || '7431e9e62b002407bded' // dev id
   , CLIENT_SECRET = process.env['GITHUB_CLIENT_SECRET'] || '26b631364ffc0d32fc03c999bb49bca1d07940d1' // dev secret
-  , CALLBACK_URL = process.env['GITHUB_CALLBACK_URL'] || 'http://127.0.0.1:3000/auth/github/callback';
+  , CALLBACK_URL = process.env['GITHUB_CALLBACK_URL'] || 'http://127.0.0.1:3000/auth/github/callback'
+  ;
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -23,7 +26,7 @@ passport.use(new GitHubStrategy({
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
-      return done(null, profile);
+      return db.findUserOrCreate(profile, done);
     });
   }
 ));

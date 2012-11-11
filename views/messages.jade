@@ -7,9 +7,9 @@ block content
         a(href='/logout', class='pull-right') Logout
       div.row-fluid
         div.span6.offset3
-          form.form-inline
+          form(action='#', method='get').form-inline
             input(type='text', name='friend_name')
-            button(type='submit', class='btn btn-primary') Add user
+            button(type='submit', class='btn btn-primary disabled') Add user
             span.help-block
               | Add a github user so that you can message him/her.
               | (Does nothing else like inviting/asking for permission)
@@ -17,8 +17,8 @@ block content
   div.row-fluid
     div.span8#messages
       h3 Your previous messages
-      if user.friends
-        for friend in user.friends
+      if user.following
+        for friend in user.following
               ul
                 for message in friend.messages
                   li message
@@ -31,9 +31,10 @@ block content
               
     div.span4#friends
       h3 Your github friends
-      if user.friends
+      if user.following
         ul
-          li friend.displayName
+          for friend in user.friends
+            li friend.displayName
       else
         p You have not added any friends!?
         blockquote
