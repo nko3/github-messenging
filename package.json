@@ -1,6 +1,6 @@
 {
   "name": "nko3-github-messenging",
-  "version": "0.0.2-9",
+  "version": "0.0.2-10",
   "description": "github-messenging",
   "main": "server.js",
   "scripts": {

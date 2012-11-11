@@ -70,14 +70,13 @@ app.get('/messages', login.ensureAuthenticated, function(req, res){
     // duh!?  Looks like we need to call json parse twice
     var f = JSON.parse(results.following.following);
     user.following = JSON.parse(f);
-    res.render('messages', { user: req.user });
+    res.render('messages', { user: user });
   });
 });
 
 app.get('/friend/add', login.ensureAuthenticated, function(req, res){
   var friendName =  req.query['friend_name'];
   request('https://api.github.com/users/'+friendName+'/following', function (error, response, body) {
-    console.log(body);
     if (!error && response.statusCode == 200) {
       // Store usr
       res.send(JSON.stringify({ 'status': 'ok', 'profile': JSON.stringify(body) }));
