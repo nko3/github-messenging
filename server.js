@@ -1,5 +1,6 @@
 var express = require('express')
-    , login = require('./login.js');
+    , login = require('./login.js')
+    , request = require('request');
 
 var app = module.exports = express();
 app.configure(function(){
@@ -11,7 +12,8 @@ app.configure(function(){
   app.use(express.session({ secret: 'htuayreve'}));
   app.use(login.passport.initialize());
   app.use(login.passport.session());
-  app.use(express.static(__dirname + '/static'));
+  app.use('/static', express.static(__dirname + '/static'));
+  app.use(app.router);
 });
 
 app.configure('development', function(){
@@ -55,6 +57,18 @@ app.get('/logout', function(req, res){
 
 app.get('/messages', login.ensureAuthenticated, function(req, res){
   res.render('messages', { user: req.user });
+});
+
+app.get('/friend/add', login.ensureAuthenticated, function(req, res){
+  var friendName =  req.query['friend_name'];
+  request('https://api.github.com/users/'+friendName, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      // Store usr
+      res.send(JSON.stringify({ 'status': 'ok', 'profile': JSON.stringify(body) }));
+    } else {
+      res.send(JSON.stringify({ 'status': 'error' }));
+    }
+  })
 });
 
 app.get('*', function(req, res){

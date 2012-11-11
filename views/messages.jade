@@ -8,14 +8,14 @@ block content
       div.row-fluid
         div.span6.offset3
           form.form-inline
-            input(type='text')
+            input(type='text' name='friend_name')
             button(type='submit', class='btn btn-primary') Add user
             span.help-block
               | Add a github user so that you can message him/her.
               | (Does nothing else like inviting/asking for permission)
 
   div.row-fluid
-    div.span8
+    div.span8#messages
       h3 Your previous messages
       if user.friends
         for friend in user.friends
@@ -29,7 +29,7 @@ block content
           | Of shoes and ships - and sealing wax - of cabbages and kings” 
           small Lewis Carroll, Alice in wonderland.
               
-    div.span4
+    div.span4#friends
       h3 Your github friends
       if user.friends
         ul
