@@ -1,5 +1,6 @@
 $(document).ready(function() {
-  var messageTo = undefined
+  var toId = undefined
+    , toName = undefined
     ;
 
   $('#friends ul li').on('click', function(e) {
@@ -11,7 +12,8 @@ $(document).ready(function() {
     // Get the github id of this user
     for (var i = 0; i < GM.following.length; i++) {
       if ( GM.following[i].login === messageTo ) {
-        messageTo = GM.following[i].id;
+        toId = GM.following[i].id;
+        toName = GM.following[i].login;
       }
     }
     $(this).toggleClass('active');
@@ -31,7 +33,7 @@ $(document).ready(function() {
     $.ajax({
       type: "GET",
       url: "/message/add",
-      data: { from: GM.user.id, to: messageTo, message: message },
+      data: { to_id: toId, to_name: toName, message: message },
       success: function(data) { 
         console.log(data);
       }

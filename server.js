@@ -78,6 +78,43 @@ app.get('/messages', login.ensureAuthenticated, function(req, res){
   });
 });
 
+// TODO: login.ensureAuthenticaated
+app.get('/message/add', function(req, res){
+  var toName = req.query['to_name']
+    , toId = req.query['to_id']
+    , message = req.query['message']
+    , user = req.user
+    ;
+  
+  if (user === undefined) {
+    var out = JSON.stringify ({ status: 'error', message: 'You are not logged in' })
+      ;
+    res.writeHead(200, {"Content-Type": "application/json"});
+    res.write(out);
+  }
+
+  async.series({
+    toUser: function(cb) {
+      db.findUserOrRetrieve(toId, toName, cb);
+    }
+  }, function(error, results) {
+    async.parallel({
+      sentMessage: function(cb) {
+        db.saveMessage(user, results.toUser, message, cb);
+      },
+      ignore: function(cb) {
+        db.addFollowing(results.toUser.profile, cb);
+      }
+    }, function(error, dummy) {
+      res.writeHead(200, {"Content-Type": "application/json"});  
+      res.write( JSON.stringify ({
+        'status': 'ok', 'message': results.sentMessage
+      }));
+    });
+  });
+
+});
+
 app.get('*', function(req, res){
   res.status(404);
   res.render('404');

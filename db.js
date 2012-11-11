@@ -9,6 +9,7 @@ function Db() {
   this.userDocname = 'user-%s';
   this.followingDocname = 'user-%s-following';
   this.followingUrl = 'https://api.github.com/users/%s/following';
+  this.profileUrl = 'https://api.github.com/users/%s';
 }
 
 Db.prototype.findUserOrCreate = function(profile, done) {
@@ -24,7 +25,7 @@ Db.prototype.findUserOrCreate = function(profile, done) {
           return done(error);
         }
         process.nextTick(function() {
-          that.addFollowing(doc, done, profile);
+          that.addFollowing(profile, done);
         });
       })
     } else {
@@ -33,7 +34,7 @@ Db.prototype.findUserOrCreate = function(profile, done) {
   })
 }
 
-Db.prototype.addFollowing = function(user, done, profile) {
+Db.prototype.addFollowing = function(profile, done) {
 
   var that = this
     , url = util.format(that.followingUrl, profile.username)
@@ -67,24 +68,62 @@ Db.prototype.getFollowing = function(id, cb) {
   });
 }
 
+// If we have the details about the user, return that.
+// Else get the details from github, save and return the result
+Db.prototype.findUserOrRetrieve = function(githubId, githubLogin, cb) {
+  var docname = util.format(this.userDocname, githubId)
+    , that = this
+    ;
+
+  couch.get(docname, function(error, doc) {
+    if (error) {
+      var url = util.format(that.profileUrl, githubLogin);
+      request(url, function (error, response, body) {
+        if (error || response.statusCode != 200) {
+          return cb(error);
+        }
+        couch.insert({'profile': that.getUserFromProfile(body)}, docname, function(error, doc) {
+          return cb(error, doc);
+        });
+      })
+    } else {
+      return cb(null, doc);
+    }
+  });
+}
+
 // Get a user object that we will store in couch
 // from a passport github profile object
 Db.prototype.getUserFromProfile = function(profile) {
-  return {
+  var u = {
     'github_id': profile.id
     , 'display_name': profile.displayName
     , 'username': profile.username
     , 'profile_url': profile.profileUrl
     , 'emails': profile.emails
-    , 'public_repos': profile._json.public_repos
-    , 'company': profile._json.company
-    , 'followers': profile._json.followers
-    , 'avatar_url': profile._json.avatar_url
-    , 'bio': profile._json.bio
-    , 'following': profile._json.following
-    , 'email': profile._json.email
-    , 'login': profile._json.login
   }
+
+  if (profile._json) {
+    u['public_repos'] = profile._json.public_repos
+    u['company'] = profile._json.company
+    u['followers'] = profile._json.followers
+    u['avatar_url'] = profile._json.avatar_url
+    u['bio'] = profile._json.bio
+    u['following'] = profile._json.following
+    u['email'] = profile._json.email
+    u['login'] = profile._json.login
+  } else {
+    u['public_repos'] = profile.public_repos
+    u['company'] = profile.company
+    u['followers'] = profile.followers
+    u['avatar_url'] = profile.avatar_url
+    u['bio'] = profile.bio
+    u['following'] = profile.following
+    u['email'] = profile.email
+    u['login'] = profile.login
+  }
+
+  return u;
 }
 
 exports = module.exports = new Db();
