@@ -67,8 +67,9 @@ app.get('/messages', login.ensureAuthenticated, function(req, res){
       db.getFollowing(user.profile.github_id, cb);
     }
   }, function(error, results) {
-    user.following = results.following.following;
-    console.log(user.following);
+    // duh!?  Looks like we need to call json parse twice
+    var f = JSON.parse(results.following.following);
+    user.following = JSON.parse(f);
     res.render('messages', { user: req.user });
   });
 });

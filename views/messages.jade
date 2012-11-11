@@ -17,24 +17,25 @@ block content
   div.row-fluid
     div.span8#messages
       h3 Your previous messages
-      if user.following
-        for friend in user.following
-              ul
-                for message in friend.messages
-                  li message
+      if user.messages
+        Loading
       else
         p You have not sent any messages!? Ah, well.  Here is something.
         blockquote 
           p "The time has come," the walrus said, "to talk of many things:
           | Of shoes and ships - and sealing wax - of cabbages and kings” 
           small Lewis Carroll, Alice in wonderland.
+      form.form-inline.well
+        legend New message
+        input(type='text', name='new_message', class='input-xxlarge')
+        button(type='submit') Send
               
     div.span4#friends
       h3 Your github friends
       if user.following
         ul
-          for friend in user.friends
-            li friend.displayName
+          each friend in user.following
+            li= friend.login
       else
         p You have not added any friends!?
         blockquote

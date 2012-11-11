@@ -29,6 +29,13 @@ body {
   margin-left: 10px;
 }
 
+#messages .well {
+  margin-top: 5em;
+}
+#messages form button {
+  margin-left: 10px;
+}
+
 /* --------------------------------------------
  *  https://github.com/necolas/css3-social-signin-buttons
  *---------------------------------------------
