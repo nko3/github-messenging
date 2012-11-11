@@ -43,4 +43,15 @@ block content
         blockquote
           | The truth is, everyone is going to hurt you. You just
           | got to find the ones worth suffering for.
-          small Bob Marley
+
+block js-variables
+  // http://stackoverflow.com/questions/6270832/jade-express-iterating-over-object-in-inline-js-code-client-side
+  != "<script>"
+  != "var GM  = {};"
+  != "GM.user = { id: " + user.profile.github_id + ", displayName: '" + user.profile.display_name + "'};"
+  if user.following
+    != "GM.following = [];"
+    for item in user.following
+      != "GM.following.push({id:" + item.id + ", login: '" + item.login +"'});"
+  != "console.log(GM);"
+  != "</script>"
