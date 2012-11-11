@@ -11,12 +11,6 @@ function Db() {
   this.followingUrl = 'https://api.github.com/users/%s/following';
 }
 
-Db.prototype.findUserByName = function(username) {
-}
-
-Db.prototype.findUserByEmail = function(email) {
-}
-
 Db.prototype.findUserOrCreate = function(profile, done) {
 
   var that = this
@@ -27,7 +21,7 @@ Db.prototype.findUserOrCreate = function(profile, done) {
     if (error) {
       couch.insert({'profile': that.getUserFromProfile(profile)}, docname, function(error, doc) {
         if (error) {
-          return done('error', profile, 'Error saving profile');
+          return done(error);
         }
         process.nextTick(function() {
           that.addFollowing(doc, done, profile);
@@ -48,12 +42,12 @@ Db.prototype.addFollowing = function(user, done, profile) {
 
   request(url, function (error, response, body) {
     if (error || response.statusCode != 200) {
-      done(error, profile, 'Unable to get following');
+      done(error);
     }
     var following = JSON.stringify(body);
     couch.insert({'following': following}, docname, function(error, doc) {
       if (error) {
-        return done('error', profile, 'Error saving following');
+        return done(error);
       }
       done(null, doc);
     });
@@ -67,7 +61,7 @@ Db.prototype.getFollowing = function(id, cb) {
 
   couch.get(docname, function(error, doc) {
     if (error) {
-      return cb('error', doc, 'Unable to get following from DB');
+      return cb(error);
     }
     return cb(null, doc);
   });
