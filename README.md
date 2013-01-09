@@ -1,21 +1,19 @@
-# github-messenging
+# github-messaging
 
-The idea was to make a website similar to gtalk for github
-users.  A user logs with this github account.  We get his
-following list and add them as friends he wants to talk to.
-If the user is online, we show as available for chat,
-else we send an email with his text.
+github-messaging was an attempt to play with Nodejs, couchdb,
+socket.io, oauth authentication, etc during [nko3][1].
 
-Of course, this was the grandiose plan.  Being solo meant
-I couldn't complete many of these.  So I got to the stage
-where I pull the following list and nothing much.  For
-what it is worth, this was the [effort][1]
-
-If you feel very inclined, do vote for the effort.  Thanks.
+The idea is to be able to message any github user.  If the user
+is online, an instant message will popup (socket.io).  Otherwise,
+a mail will be sent with the details.  Of course, this is neither
+unheard of nor new.  We could use IRC or plain email as well,
+in place of github-messaging.  Github-messaging neither pretends
+to be new or novel, in that regard.  Just an attempt at providing
+a simpler solution to a problem I often face.
 
 ### Setup
 
         $ npm install
         $ node server.js
 
-[1]: http://github-messenging.nko3.jitsu.com
+[1]: http://nodeknockout.com/
